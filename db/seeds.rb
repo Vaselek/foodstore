@@ -6,5 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+shop_fixtures = Rails.root.join('app', 'assets', 'images', 'fixtures', 'shops')
+dish_fixtures = Rails.root.join('app', 'assets', 'images', 'fixtures', 'dishes')
 
 User.create!(name: "Asel", email: "asel@mail.ru", password: "jkljkl", admin: true)
+
+1.upto 8 do |i|
+	Shop.create(title: Faker::Company.name, 
+							description: Faker::Lorem.sentence,
+							logo: File.new(shop_fixtures.join(i.to_s)))
+end
+
+shops = Shop.all
+
+1.upto 24 do |i|
+	Dish.create(title: Faker::Food.ingredient, 
+							description: Faker::Lorem.sentence, 
+							price: Faker::Number.decimal(2),
+							shop: shops.sample,
+							image: File.new(dish_fixtures.join(i.to_s)))
+end
+

@@ -1,0 +1,53 @@
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+	<ul class="nav">
+		<h2 class="cart">Корзина</h2>
+		<li class="active"></li>
+		<% if current_user.carts.where(shop: @shop).first_or_create %>
+			<%= render current_user.carts.cart_dishes %>
+			<%= link_to "Удалить все заказы", destroy_all_cart_dishes_path(@current_user.cart) %>
+			<div>Итого: <%= @total_price %></div>			
+		<% else %>
+			<p><%= button_to 'Создать корзину', carts_path(@shop), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>			
+		<% end %>
+		
+		
+	</ul>
+</div>
+
+<div class="col-xs-6 col-sm-3">
+	<p id="notice"><%= notice %></p>
+	<div class="container">
+		<div class="row">
+			<p>
+				<h1><strong><%= @shop.title %></strong></h1>
+			</p>
+			<p>
+				<strong><%= @shop.description %></strong>
+			</p>			
+
+			
+		</div>
+				
+				
+					<% @dishes.each do |dish| %>
+					<div class="col-md-3">
+						<div class="thumbnail" style="height:300px">
+							<%= image_tag dish.image.url, size: '230x230' %>
+							<div>
+								<h6 class="block"><%= link_to dish.title, dish %></h6>
+							</div>
+							<div class="attach_to_right_bottom">
+							<p><%= button_to 'Добавить в корзину', dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>
+							</div>
+						</div>
+						</div>
+					<% end %>
+				
+		
+
+			
+	
+
+	</div>
+
+</div>

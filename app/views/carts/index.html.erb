@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Список пользователей у которых есть корзина</h1>
+
+<table>
+  <% @carts.each do |cart| %>
+    <tr>
+      <td><%= cart.user.name %></td>
+      <td><%= link_to 'Show', cart %></td>
+      <td><%= link_to 'Edit', edit_cart_path(cart) %></td>
+      <td><%= link_to 'Destroy', cart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Создать корзину у нового пользователя', new_cart_path %>

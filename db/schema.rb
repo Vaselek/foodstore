@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313142556) do
+ActiveRecord::Schema.define(version: 20170315113400) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -24,6 +24,51 @@ ActiveRecord::Schema.define(version: 20170313142556) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "shop_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_carts_on_shop_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "dish_carts", force: :cascade do |t|
+    t.integer  "dish_id"
+    t.decimal  "price"
+    t.integer  "portion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "cart_id"
+    t.index ["cart_id"], name: "index_dish_carts_on_cart_id"
+    t.index ["dish_id"], name: "index_dish_carts_on_dish_id"
+  end
+
+  create_table "dishes", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.decimal  "price"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "shop_id"
+    t.index ["shop_id"], name: "index_dishes_on_shop_id"
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,5 @@
+<% unless @dish_cart_new %>
+  $("[data-id=<%= @dish_cart.id%>]").remove();
+<% end %>
+$(".active").append("<%= j render @dish_cart %>");
+
