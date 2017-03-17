@@ -2,15 +2,13 @@
 	<ul class="nav">
 		<h2 class="cart">Корзина</h2>
 		<li class="active"></li>
-		<% if current_user.carts.where(shop: @shop).first_or_create %>
-			<%= render current_user.carts.cart_dishes %>
-			<%= link_to "Удалить все заказы", destroy_all_cart_dishes_path(@current_user.cart) %>
-			<div>Итого: <%= @total_price %></div>			
-		<% else %>
-			<p><%= button_to 'Создать корзину', carts_path(@shop), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>			
-		<% end %>
-		
-		
+		<% if user_signed_in? %>
+			<% current_user.carts.where(shop: @shop).first_or_create %>
+				<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
+				
+				<div>Итого: <%= @total_price %></div>			
+				<p><%= button_to 'Очистить корзину', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
+		<% end %>		
 	</ul>
 </div>
 
@@ -24,30 +22,22 @@
 			<p>
 				<strong><%= @shop.description %></strong>
 			</p>			
-
-			
-		</div>
-				
-				
-					<% @dishes.each do |dish| %>
-					<div class="col-md-3">
-						<div class="thumbnail" style="height:300px">
-							<%= image_tag dish.image.url, size: '230x230' %>
-							<div>
-								<h6 class="block"><%= link_to dish.title, dish %></h6>
-							</div>
-							<div class="attach_to_right_bottom">
+		</div>				
+				<% @dishes.each do |dish| %>
+				<div class="col-md-3">
+					<div class="thumbnail" style="height:300px">
+						<%= image_tag dish.image.url, size: '230x230' %>
+						<div>
+							<h6 class="block"><%= link_to dish.title, dish %></h6>
+						</div>
+						<div class="attach_to_right_bottom">
+						<% if (user_signed_in?) && (can? :manage, DishCart) %>
 							<p><%= button_to 'Добавить в корзину', dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>
-							</div>
+						<% end %>
 						</div>
-						</div>
-					<% end %>
-				
-		
-
-			
-	
-
-	</div>
+					</div>
+					</div>
+				<% end %>
+			</div>
 
 </div>

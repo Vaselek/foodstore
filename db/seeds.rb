@@ -9,9 +9,9 @@
 shop_fixtures = Rails.root.join('app', 'assets', 'images', 'fixtures', 'shops')
 dish_fixtures = Rails.root.join('app', 'assets', 'images', 'fixtures', 'dishes')
 
-User.create!(name: "Asel", email: "asel@mail.ru", password: "jkljkl", admin: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
-User.create!(name: "user1", email: "user1@mail.ru", password: "jkljkl", admin: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
-User.create!(name: "user2", email: "user2@mail.ru", password: "jkljkl", admin: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
+User.create!(name: "Asel", email: "asel@mail.ru", password: "jkljkl", admin: true, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
+User.create!(name: "user1", email: "user1@mail.ru", password: "jkljkl", admin: false, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
+User.create!(name: "user2", email: "user2@mail.ru", password: "jkljkl", admin: false, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
 1.upto 8 do |i|
 	Shop.create(title: Faker::Company.name, 
 							description: Faker::Lorem.sentence,
