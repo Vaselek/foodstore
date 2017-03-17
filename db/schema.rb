@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317054555) do
+ActiveRecord::Schema.define(version: 20170317104612) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -60,6 +60,27 @@ ActiveRecord::Schema.define(version: 20170317054555) do
     t.index ["shop_id"], name: "index_dishes_on_shop_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "dish_id"
+    t.decimal  "price"
+    t.integer  "portion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dish_id"], name: "index_order_items_on_dish_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "shop_id"
+    t.decimal  "total_price"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["shop_id"], name: "index_orders_on_shop_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -88,7 +109,7 @@ ActiveRecord::Schema.define(version: 20170317054555) do
     t.boolean  "admin",                  default: false
     t.string   "phone"
     t.string   "address"
-    t.boolean  "user",                   default: true
+    t.boolean  "user",                   default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

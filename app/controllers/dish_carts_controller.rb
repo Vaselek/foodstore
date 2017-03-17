@@ -26,7 +26,8 @@ class DishCartsController < ApplicationController
 	end
 
 	def destroy_all
-		@dish_carts = DishCart.all
+		@shop = Shop.find(params[:shop_id])
+		@dish_carts = current_user.carts.where(shop: @shop).dish_carts
 
 		@dish_carts.each do |dish_cart|
 			@dish_cart.destroy

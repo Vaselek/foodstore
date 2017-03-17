@@ -1,6 +1,7 @@
 class Dish < ApplicationRecord
 	belongs_to :shop
 	has_many :dish_carts
+	has_many :order_items
 
 	has_attached_file :image,
                     styles: { medium: '250x250>', thumb: '100x100>'},

@@ -1,0 +1,20 @@
+<h1>Блюда заказа</h1>
+
+<table class="table">
+	<tr>
+		<th>ID блюда</th>
+		<th>Наименование блюда</th>
+		<th>Стоимость блюда</th>
+		<th>Количество порций</th>
+	</tr>
+	<% @order.order_items.each_with_index do |item, index| %>
+	<tr>	
+		<td><%= index+1 %></td>
+		<td><%= item.dish.title %></td>
+		<td><%= item.price %></td>
+		<td><%= item.portion %></td>
+	</tr>
+	<% end %>
+</table>
+
+

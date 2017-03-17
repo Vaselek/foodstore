@@ -11,11 +11,8 @@ Rails.application.routes.draw do
 
   resources :dish_carts, only: :destroy
   
-  resources :dish_carts do
-    member do 
-      get 'destroy_all'
-    end
-  end
+  resources :orders, only: [:index, :show]
+
   ActiveAdmin.routes(self)
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,43 +1,40 @@
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-	<ul class="nav">
-		<h2 class="cart">Корзина</h2>
-		<li class="active"></li>
-		<% if user_signed_in? %>
-			<% current_user.carts.where(shop: @shop).first_or_create %>
-				<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
-				
-				<div>Итого: <%= @total_price %></div>			
-				<p><%= button_to 'Очистить корзину', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
-		<% end %>		
-	</ul>
-</div>
-
-<div class="col-xs-6 col-sm-3">
-	<p id="notice"><%= notice %></p>
-	<div class="container">
+<div class="container">
+	<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+		<ul class="nav">
+			<h2 class="cart">Корзина</h2>
+			<li class="active"></li>
+			<% if user_signed_in? %>
+				<% current_user.carts.where(shop: @shop).first_or_create %>
+					<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
+					
+					<div>Итого: <%= current_user.carts.where(shop: @shop).first.total_price %></div>
+					<p><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
+			<% end %>		
+		</ul>
+	</div>
+	<div class="col-md-9">
+		<p id="notice"><%= notice %></p>
 		<div class="row">
-			<p>
-				<h1><strong><%= @shop.title %></strong></h1>
-			</p>
-			<p>
-				<strong><%= @shop.description %></strong>
-			</p>			
-		</div>				
+			<h1 class="center"><strong><%= @shop.title %></strong></h1>
+			<p class="center"><strong><%= @shop.description %></strong></p>			
+		</div>
+			<div>			
 				<% @dishes.each do |dish| %>
-				<div class="col-md-3">
-					<div class="thumbnail" style="height:300px">
-						<%= image_tag dish.image.url, size: '230x230' %>
-						<div>
-							<h6 class="block"><%= link_to dish.title, dish %></h6>
+					<div class="col-md-4">
+						<div class="thumbnail" style="height:320px">
+							<%= image_tag dish.image.url, size: '230x230' %>
+							<div>
+								<h6 class="block"><%= link_to dish.title, dish %></h6>
+							</div>
+							<div class="attach_to_right_bottom">
+							<% if (user_signed_in?) && (can? :manage, DishCart) %>
+								<p><%= button_to 'Добавить в корзину', dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>
+							<% end %>
+							</div>
 						</div>
-						<div class="attach_to_right_bottom">
-						<% if (user_signed_in?) && (can? :manage, DishCart) %>
-							<p><%= button_to 'Добавить в корзину', dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>
-						<% end %>
-						</div>
-					</div>
 					</div>
 				<% end %>
 			</div>
-
+		</div>
+	</div>
 </div>

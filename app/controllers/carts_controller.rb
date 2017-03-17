@@ -1,5 +1,8 @@
 class CartsController < ApplicationController
-	before_action :set_cart, only: [:show, :edit, :update, :destroy]
+	before_action :create_order, only: [:destroy]
+  before_action :destroy_dish_carts
+  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  
   
   def index
   	@carts = Cart.all
@@ -50,6 +53,8 @@ class CartsController < ApplicationController
   	end
   end
 
+  
+
   private
 
   def set_cart
@@ -60,4 +65,21 @@ class CartsController < ApplicationController
   	params.require(:cart).permit(:user_id, :shop_id)
   end
 
+  def create_order
+    @cart = Cart.find(params[:id])
+    order = Order.create(user: @cart.user, shop: @cart.shop, total_price: @cart.total_price)
+    @cart.dish_carts.each do |dish_cart|
+      OrderItem.create(order: order, 
+                       dish_id: dish_cart.dish.id, 
+                       price: dish_cart.price, 
+                       portion: dish_cart.portion)
+    end
+  end
+
+  def destroy_dish_carts
+    @cart = Cart.find(params[:id])
+    @cart.dish_carts.destroy_all
+  end
 end
+
+

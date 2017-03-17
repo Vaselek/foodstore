@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Лучшие кафе и рестораны</h1>
+<h1 class="center">Лучшие кафе и рестораны</h1>
 
 <div class="container">
   <div class="row">
     <% @shops.each do |shop| %>
       <div class="col-md-3">
-        <div class="thumbnail" style="height:300px">
+        <div class="thumbnail" style="height:340px">
           <%= image_tag shop.logo.url(:medium) %>
             <div class="attach_to_left_bottom">
               <h6 class="block"><%= shop.title %></h6>
