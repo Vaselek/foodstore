@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :carts
   resources :dishes
   resources :shops
-
+  
   resources :dishes do
     resources :dish_carts, only: :create
   end
