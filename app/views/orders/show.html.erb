@@ -6,6 +6,7 @@
 		<th>Наименование блюда</th>
 		<th>Стоимость блюда</th>
 		<th>Количество порций</th>
+		<th>Итого</th>
 	</tr>
 	<% @order.order_items.each_with_index do |item, index| %>
 	<tr>	
@@ -13,6 +14,7 @@
 		<td><%= item.dish.title %></td>
 		<td><%= item.price %></td>
 		<td><%= item.portion %></td>
+		<td><%= item.price * item.portion %></td>
 	</tr>
 	<% end %>
 </table>

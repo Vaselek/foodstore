@@ -1,6 +1,5 @@
 class CartsController < ApplicationController
 	before_action :create_order, only: [:destroy]
-  before_action :destroy_dish_carts
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   
   
@@ -48,7 +47,7 @@ class CartsController < ApplicationController
   def destroy
   	@cart.destroy
   	respond_to do |format|
-  		format.html { redirect_to :back, notice: 'Cart was successfully destroyed' }
+  		format.html { redirect_to :back, notice: 'Заказ отправлен, корзина очищена' }
   		format.json { head :no_content }
   	end
   end
@@ -67,19 +66,17 @@ class CartsController < ApplicationController
 
   def create_order
     @cart = Cart.find(params[:id])
-    order = Order.create(user: @cart.user, shop: @cart.shop, total_price: @cart.total_price)
+    order = Order.create(user: @cart.user, shop: @cart.shop, total_price: @cart.dish_carts.sum { |p| p.price * p.portion })
     @cart.dish_carts.each do |dish_cart|
       OrderItem.create(order: order, 
                        dish_id: dish_cart.dish.id, 
                        price: dish_cart.price, 
-                       portion: dish_cart.portion)
+                       portion: dish_cart.portion)      
     end
-  end
-
-  def destroy_dish_carts
-    @cart = Cart.find(params[:id])
     @cart.dish_carts.destroy_all
   end
+
+  
 end
 
 
