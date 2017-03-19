@@ -1,4 +1,34 @@
 ActiveAdmin.register User do
+	permit_params :name, :email, :phone, :address, :password, :password_confirmation
+
+	form do |f|
+		f.inputs do
+			f.semantic_errors
+			f.input :name
+			f.input :email
+			f.input :password
+			f.input :password_confirmation
+			f.input :phone
+			f.input :address
+			f.input :admin, as: :boolean
+			f.input :user, as: :boolean, :input_html => { :checked => 'checked' }
+		end
+		f.actions
+	end
+
+	index do
+		selectable_column
+		id_column
+		column :name
+		column :email
+		column :password
+		column :phone
+		column :address
+		column :admin
+		column :user
+		actions
+	end
+
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

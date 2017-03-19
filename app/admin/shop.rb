@@ -1,5 +1,7 @@
 ActiveAdmin.register Shop do
 
+	permit_params :title, :description, :image
+
 	sidebar "Dishes", only: [:show, :edit] do
 		ul do 
 			li link_to "Dishes", admin_shop_dishes_path(resource)
@@ -14,6 +16,15 @@ ActiveAdmin.register Shop do
 		end
 		column :title
 		actions
+	end
+
+	form do |f|
+		f.inputs do
+			f.input :title
+			f.input :description
+			f.input :logo, :as => :file, :hint => image_tag(f.object.logo.url(:thumb))
+		end
+		f.actions
 	end
 
 

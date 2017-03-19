@@ -1,14 +1,14 @@
 <div class="container">
 	<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 		<ul class="nav">
-			<h2 class="cart">Корзина</h2>
-			<li class="active"></li>
 			<% if user_signed_in? %>
-				<% current_user.carts.where(shop: @shop).first_or_create %>
-					<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
-					
-					<div>Итого: <%= current_user.carts.where(shop: @shop).first.total_price %></div>
-					<p><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
+				<h2 class="cart">Корзина</h2>
+				<li class="active"></li>			
+					<% current_user.carts.where(shop: @shop).first_or_create %>
+						<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
+						
+						<div>Итого: <%= current_user.carts.where(shop: @shop).first.total_price %></div>
+						<p><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
 			<% end %>		
 		</ul>
 	</div>

@@ -4,7 +4,7 @@ ActiveAdmin.register Dish do
 	belongs_to :shop
 
 	form do |f|
-		f.input do
+		f.inputs do
 			f.input :title
 			f.input :description
 			f.input :price
