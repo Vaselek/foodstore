@@ -2,13 +2,14 @@ class DishCartsController < ApplicationController
 
 	def create
 		dish = Dish.find(params[:dish_id])
-		if DishCart.where(dish: dish).exists?
-			@dish_cart = DishCart.where(dish: dish).first
+		@cart = current_user.carts.where(shop: dish.shop).first
+		if DishCart.where(dish: dish, cart: @cart).exists?
+			@dish_cart = DishCart.where(dish: dish, cart: @cart).first
 			@dish_cart.portion += 1
 			@dish_cart.save
 		else
 			@dish_cart_new = true
-			@dish_cart = DishCart.create dish: dish, cart: current_user.carts.first, price: dish.price, portion: 1
+			@dish_cart = DishCart.create dish: dish, cart: @cart, price: dish.price, portion: 1
 		end
 		respond_to do |format|
 			format.html { redirect_to @dish }
@@ -17,7 +18,10 @@ class DishCartsController < ApplicationController
 	end
 
 	def destroy
-		DishCart.destroy(params[:id])
+		@dish_cart = DishCart.find(params[:id])
+		@cart = @dish_cart.cart
+
+		@dish_cart.destroy
 
 		respond_to do |format|
 			format.html { redirect_to @dish }

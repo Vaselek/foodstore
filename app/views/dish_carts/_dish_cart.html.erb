@@ -1,9 +1,9 @@
 <li data-id="<%= dish_cart.id %>">
 	<strong><%= dish_cart.dish.title %></strong>: <%= dish_cart.portion %> порция, <%= dish_cart.portion * dish_cart.price %> сом
-	
+
 	<!--  <%= @number_of_portions %> -->
 
-	<p><%= link_to 'Заказ завершен', dish_cart_path(dish_cart), remote: true, method: :delete, class: "btn btn-primary btn btn-default btn-sm remove-dish-from-cart" %></p>
+	<p><%= link_to 'Отменить заказ', dish_cart_path(dish_cart), remote: true, method: :delete, class: "btn btn-primary btn btn-default btn-sm remove-dish-from-cart" %></p>
 
 	
 	

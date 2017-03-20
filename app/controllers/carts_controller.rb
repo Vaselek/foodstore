@@ -1,6 +1,5 @@
 class CartsController < ApplicationController
-	before_action :create_order, only: [:destroy]
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+	before_action :set_cart, only: [:show, :edit, :update, :destroy]
   
   
   def index
@@ -45,11 +44,21 @@ class CartsController < ApplicationController
   # end
 
   def destroy
-  	@cart.destroy
-  	respond_to do |format|
-  		format.html { redirect_to :back, notice: 'Заказ отправлен, корзина очищена' }
-  		format.json { head :no_content }
-  	end
+  	@cart = Cart.find(params[:id])
+    order = Order.create(user: @cart.user, shop: @cart.shop, total_price: @cart.dish_carts.sum { |p| p.price * p.portion })
+    @cart.dish_carts.each do |dish_cart|
+      OrderItem.create(order: order, 
+                       dish_id: dish_cart.dish.id, 
+                       price: dish_cart.price, 
+                       portion: dish_cart.portion)      
+    end
+    
+    @cart.dish_carts.destroy_all
+    @cart.destroy
+    respond_to do |format|
+      format.html { redirect_to :back, notice: 'Заказ отправлен, корзина очищена' }
+      format.json { head :no_content }
+    end
   end
 
   
@@ -63,20 +72,7 @@ class CartsController < ApplicationController
   def cart_params
   	params.require(:cart).permit(:user_id, :shop_id)
   end
-
-  def create_order
-    @cart = Cart.find(params[:id])
-    order = Order.create(user: @cart.user, shop: @cart.shop, total_price: @cart.dish_carts.sum { |p| p.price * p.portion })
-    @cart.dish_carts.each do |dish_cart|
-      OrderItem.create(order: order, 
-                       dish_id: dish_cart.dish.id, 
-                       price: dish_cart.price, 
-                       portion: dish_cart.portion)      
-    end
-    @cart.dish_carts.destroy_all
-  end
-
-  
+ 
 end
 
 

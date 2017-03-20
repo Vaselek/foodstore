@@ -7,12 +7,11 @@ class Ability
       user ||= User.new # guest user (not logged in)
       if user.admin?
         can :manage, :all
-      elsif user.user?
-        can :manage, DishCart, id: user.id
-        can :manage, Cart, id: user.id
-        # can :manage, Order, id: user.id
-        # can :manage, OrderItem, id: user.id
-        # can :read, :all
+      elsif user.user?       
+        can :manage, DishCart
+        can :destroy, Cart
+        can :read, :all
+        can :manage, User, id: user.id
         can :manage, User, id: user.id
       else
         can :read, :all

@@ -1,20 +1,24 @@
-<h1>Мои заказы</h1>
+<div class="container">
 
-<table class="table">
-	<tr>
-		<th>ID заказа</th>
-		<th>Перечень блюд</th>
-		<th>Дата заказа</th>
-		<th>Стоимость заказа (сомы)</th>
-	</tr>
-	<% @orders.each do |order| %>
-	<tr>	
-		<td><%= order.id %></td>
-		<td><%= link_to "Перечень блюд", order %></td>
-		<td><%= order.created_at.strftime("%d %b. %Y") %></td>
-		<td><%= order.total_price %></td>
-	</tr>
-	<% end %>
-</table>
+	<h1>Мои заказы</h1>
+
+	<table class="table">
+		<tr>
+			<th>Номер заказа</th>
+			<th>Перечень блюд</th>
+			<th>Дата заказа</th>
+			<th>Стоимость заказа (сомы)</th>
+		</tr>
+		<% @orders.each_with_index do |order, index| %>
+		<tr>	
+			<td><%= index+1 %></td>
+			<td><%= link_to "Перечень блюд", order %></td>
+			<td><%= order.created_at.strftime("%d %b. %Y") %></td>
+			<td><%= order.total_price %></td>
+		</tr>
+		<% end %>
+	</table>
+
+</div>
 
 

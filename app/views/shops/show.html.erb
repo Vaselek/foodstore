@@ -3,12 +3,12 @@
 		<ul class="nav">
 			<% if user_signed_in? %>
 				<h2 class="cart">Корзина</h2>
-				<li class="active"></li>			
-					<% current_user.carts.where(shop: @shop).first_or_create %>
+				<% current_user.carts.where(shop: @shop).first_or_create %>
+				<p class="active">				
 						<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
-						
-						<div>Итого: <%= current_user.carts.where(shop: @shop).first.total_price %></div>
-						<p><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></p>			
+				</p>
+				<div>Итого: <span id="total_price"><%= current_user.carts.where(shop: @shop).first.total_price %></span></div>
+				<div><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></div>			
 			<% end %>		
 		</ul>
 	</div>
@@ -23,7 +23,7 @@
 						<div class="thumbnail" style="height:320px">
 							<%= image_tag dish.image.url, size: '230x230' %>
 							<div>
-								<h6 class="block"><%= link_to dish.title, dish %></h6>
+								<h6 class="block"><%= link_to dish.title, dish %>, <%= dish.price %> сом</h6>
 							</div>
 							<div class="attach_to_right_bottom">
 							<% if (user_signed_in?) && (can? :manage, DishCart) %>

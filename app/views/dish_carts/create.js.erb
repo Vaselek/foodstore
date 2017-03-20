@@ -3,3 +3,5 @@
 <% end %>
 $(".active").append("<%= j render @dish_cart %>");
 
+$("#total_price").html("<%= @cart.total_price %>");
+

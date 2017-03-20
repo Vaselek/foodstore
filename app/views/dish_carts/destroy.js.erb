@@ -1,1 +1,3 @@
 $('[data-id="<%= params[:id] %>"]').remove();
+
+$("#total_price").html("<%= @cart.total_price %>");
