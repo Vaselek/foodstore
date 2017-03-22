@@ -8,7 +8,9 @@
 						<%= render current_user.carts.where(shop: @shop).first.dish_carts %>
 				</p>
 				<div>Итого: <span id="total_price"><%= current_user.carts.where(shop: @shop).first.total_price %></span></div>
-				<div><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></div>			
+				<% if can? :destroy, Cart %>
+					<div><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></div>
+				<% end %>		
 			<% end %>		
 		</ul>
 	</div>

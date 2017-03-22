@@ -8,15 +8,13 @@ class Ability
       if user.admin?
         can :manage, :all
       elsif user.user?       
-        can :manage, DishCart
+        can :manage, DishCart, id:user.id
         can :destroy, Cart
         can :read, :all
-        can :manage, User, id: user.id
-        can :manage, User, id: user.id
+        can :manage, User, id: user.id       
       else
         can :read, :all
       end
-
      
     # The first argument to `can` is the action you are giving the user
     # permission to do.

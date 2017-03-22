@@ -29,20 +29,6 @@ class DishCartsController < ApplicationController
 		end
 	end
 
-	def destroy_all
-		@shop = Shop.find(params[:shop_id])
-		@dish_carts = current_user.carts.where(shop: @shop).dish_carts
-
-		@dish_carts.each do |dish_cart|
-			@dish_cart.destroy
-		end
-
-		respond_to do |format|
-			format.html { redirect_to shop_path }
-			format.js {}
-		end
-	end
-
 	private
 
 	def dish_cart_params
