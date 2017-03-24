@@ -9,7 +9,7 @@
 				</p>
 				<div>Итого: <span id="total_price"><%= current_user.carts.where(shop: @shop).first.total_price %></span></div>
 				<% if can? :destroy, Cart %>
-					<div><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary add-dish-to-cart" %></div>
+					<div><%= button_to 'Отправить заказ', cart_path(current_user.carts.where(shop: @shop).first), remote: true, method: :delete, class: "btn btn-primary" %></div>
 				<% end %>		
 			<% end %>		
 		</ul>
@@ -29,7 +29,7 @@
 							</div>
 							<div class="attach_to_right_bottom">
 							<% if (user_signed_in?) && (can? :manage, DishCart) %>
-								<p><%= button_to 'Добавить в корзину', dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart" %></p>
+								<p><%= button_to "Add to cart", dish_dish_carts_path(dish), remote: true, method: :post, class: "btn btn-primary add-dish-to-cart", :form => { :id => dish.id } %></p>
 							<% end %>
 							</div>
 						</div>

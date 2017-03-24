@@ -12,7 +12,7 @@ class DishCartsController < ApplicationController
 			@dish_cart = DishCart.create dish: dish, cart: @cart, price: dish.price, portion: 1
 		end
 		respond_to do |format|
-			format.html { redirect_to @dish }
+			format.html { redirect_to :back }
 			format.js {}
 		end
 	end

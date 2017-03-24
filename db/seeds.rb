@@ -12,7 +12,8 @@ dish_fixtures = Rails.root.join('app', 'assets', 'images', 'fixtures', 'dishes')
 User.create!(name: "Asel", email: "asel@mail.ru", password: "jkljkl", admin: true, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
 User.create!(name: "user1", email: "user1@mail.ru", password: "jkljkl", admin: false, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
 User.create!(name: "user2", email: "user2@mail.ru", password: "jkljkl", admin: false, user: true, address: Faker::Address.street_address, phone: Faker::PhoneNumber.cell_phone)
-1.upto 8 do |i|
+
+1.upto 7 do |i|
 	Shop.create(title: Faker::Company.name, 
 							description: Faker::Lorem.sentence,
 							logo: File.new(shop_fixtures.join(i.to_s)))
@@ -20,7 +21,7 @@ end
 
 shops = Shop.all
 
-1.upto 24 do |i|
+1.upto 21 do |i|
 	Dish.create(title: Faker::Food.ingredient, 
 							description: Faker::Lorem.sentence, 
 							price: Faker::Number.decimal(2),
@@ -28,3 +29,13 @@ shops = Shop.all
 							image: File.new(dish_fixtures.join(i.to_s)))
 end
 
+Shop.create(title: "Namba", 
+							description: "Food store",
+							logo: File.new(shop_fixtures.join(8.to_s)))
+
+
+Dish.create(title: "Manty", 
+						description: "nice food", 
+						price: 80.0,
+						shop_id: 8,
+						image: File.new(dish_fixtures.join(22.to_s)))
