@@ -28,6 +28,7 @@ Given(/^I signed up with email "([^"]*)" and password "([^"]*)"$/) do |email, pa
     fill_in('user_password', with: password)
     click_button 'Log in'
   end
+  expect(page).to have_css(".alert-success")
 end
 
 When(/^I add dish "([^"]*)" with id "([^"]*)" and price "([^"]*)"$/) do |title, id, price|
