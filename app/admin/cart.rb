@@ -1,5 +1,7 @@
 ActiveAdmin.register Cart do
 
+  permit_params :user_id, :shop_id
+
 	sidebar "Cart Content", only: [:show, :edit] do
 		ul do 
 			li link_to "Dishes in Cart", admin_cart_dish_carts_path(resource)

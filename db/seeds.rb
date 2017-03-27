@@ -30,8 +30,8 @@ shops = Shop.all
 end
 
 Shop.create(title: "Namba", 
-							description: "Food store",
-							logo: File.new(shop_fixtures.join(8.to_s)))
+						description: "Food store",
+						logo: File.new(shop_fixtures.join(8.to_s)))
 
 
 Dish.create(title: "Manty", 
@@ -39,3 +39,15 @@ Dish.create(title: "Manty",
 						price: 80.0,
 						shop_id: 8,
 						image: File.new(dish_fixtures.join(22.to_s)))
+
+dish = Dish.find(8)
+
+
+order_item = OrderItem.create(order_id: 1, dish: dish, price: dish.price, portion: 1)
+order_items = OrderItem.all
+total_price = order_items.sum { |p| p.price * p.portion }
+Order.create(user_id: 1, shop_id: 1, total_price: total_price)
+
+dish_cart = DishCart.create(cart_id: 1, dish: dish, price: dish.price, portion: 1)
+dish_carts = DishCart.all
+Cart.create(user_id: 1, shop_id: 1)
